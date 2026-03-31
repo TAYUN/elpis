@@ -1,5 +1,6 @@
 const Koa = require('koa')
 
+// 创建koa实例
 const app = new Koa()
 // 启动服务
 
