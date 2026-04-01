@@ -1,3 +1,3 @@
-const Elpis = require('./elpis-core');
+const Elpis = require('./elpis-core')
 
-Elpis.start();
+Elpis.start()
