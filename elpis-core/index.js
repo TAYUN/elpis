@@ -59,7 +59,7 @@ module.exports = {
     try {
       require(`${app.businessPath}${sep}middleware.js`)()
     } catch (error) {
-      console.log(`[exception] middleware.js not found, skip loading middleware`)
+      console.log(`[exception] glob middleware.js not found, skip loading middleware`)
     }
     console.log('-- [start] extends loaded --')
     // 7. 加载路由

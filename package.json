@@ -5,6 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --quiet --ext js,vue .",
+    "dev": "set _ENV=local&&nodemon ./index.js",
+    "beta": "set _ENV=beta&&node ./index.js",
+    "prod": "set _ENV=production&&node ./index.js",
+    "dev:mac": "_ENV=local nodemon ./index.js",
+    "beta:mac": "_ENV=beta node ./index.js",
+    "prod:mac": "_ENV=production node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
