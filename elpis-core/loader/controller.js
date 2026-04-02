@@ -58,4 +58,7 @@ module.exports = (app) => {
       }
     }
   })
+
+  // 挂载到 app 上
+  app.controller = controller
 }

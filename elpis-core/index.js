@@ -43,7 +43,6 @@ module.exports = {
     console.log('-- [start] middlewares loaded --')
     // 2. 加载routerSchema
     routerSchemaLoader(app)
-    console.log(app.routerSchema)
     console.log('-- [start] routerSchemas loaded --')
     // 3. 加载controller
     controllerLoader(app)
@@ -56,6 +55,12 @@ module.exports = {
     console.log('-- [start] configs loaded --')
     // 6. 加载extend
     extendLoader(app)
+    // 6.5 加载自定义中间件
+    try {
+      require(`${app.businessPath}${sep}middleware.js`)()
+    } catch (error) {
+      console.log(`[exception] middleware.js not found, skip loading middleware`)
+    }
     console.log('-- [start] extends loaded --')
     // 7. 加载路由
     routerLoader(app)
