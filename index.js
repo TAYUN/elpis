@@ -1,3 +1,5 @@
 const Elpis = require('./elpis-core')
 
-Elpis.start()
+Elpis.start({
+  name: 'Elpis'
+})
