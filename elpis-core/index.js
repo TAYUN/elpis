@@ -16,7 +16,6 @@ const configLoader = require('./loader/config')
 const extendLoader = require('./loader/extend')
 const routerLoader = require('./loader/router')
 
-
 module.exports = {
   /**
    * 启动 Koa 服务
@@ -57,7 +56,8 @@ module.exports = {
     extendLoader(app)
     // 6.5 加载自定义中间件
     try {
-      require(`${app.businessPath}${sep}middleware.js`)()
+      require(`${app.businessPath}${sep}middleware.js`)(app)
+      console.log(`-- [start] glob middleware.js loaded --`)
     } catch (error) {
       console.log(`[exception] glob middleware.js not found, skip loading middleware`)
     }
