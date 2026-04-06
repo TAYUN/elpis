@@ -6,7 +6,8 @@
     <link href="/static/logo.jpeg" rel="icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/axios@1.14.0/dist/axios.min.js"></script>
-    <title>{{name}}</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script>
+    <title>{{ name }}</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -38,8 +39,8 @@
   <body>
     <div class="page-card">
       <h1>Page 1</h1>
-      <input type="text" id="env" value="{{ env}}" />
-      <input type="text" id="options" value="{{ options}}" />
+      <input type="text" id="env" value="{{ env }}" />
+      <input type="text" id="options" value="{{ options }}" />
 
       <button onclick="handleClick()">发送请求</button>
     </div>
@@ -56,7 +57,22 @@
     }
 
     const handleClick = () => {
-        axios.get('/api/project/list').then(res => console.log(res))
+      // axios.get('/api/project/list').then(res => console.log(res))
+      // axios
+      //   .get('/api/project/list', { a: 1, b: 2, c: 3 })
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.error(err))
+      const signKey = 'wrewerKe234K232Jfsdusd23K9sdJ2'
+      const st = Date.now()
+      axios.request({
+        method: 'get',
+        url: '/api/project/list',
+        params: {page: 1, pageSize: 10},
+        headers: {
+          s_t: st,
+          s_sign: md5(`${signKey}_${st}`)
+        }
+      })
     }
   </script>
 </html>
