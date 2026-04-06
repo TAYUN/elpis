@@ -1,5 +1,6 @@
 module.exports = (app) => {
-  return class ProjectService {
+  const BaseService = require('./base')(app)
+  return class ProjectService extends BaseService {
     /**
      * 获取项目列表
      */
