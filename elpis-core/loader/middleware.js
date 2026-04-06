@@ -15,7 +15,7 @@ module.exports = (app) => {
   const fileList = glob.sync(path.resolve(middlewarePath, `.${sep}**${sep}*.js`))
 
   // 遍历所有文件目录，把内容加载到app.middleware下
-  const middleware = {}
+  const middlewares = {}
   fileList.forEach((file) => {
     // 提取文件名称
     let name = path.resolve(file)
@@ -32,7 +32,8 @@ module.exports = (app) => {
 
     // 游标遍历：cursor 是"钻头"，逐层深入嵌套对象
     // middleware 是"根"，始终保存最终数据
-    let cursor = middleware
+    let cursor = middlewares
+
 
     for (let i = 0; i < names.length; i++) {
       const key = names[i]
@@ -48,9 +49,10 @@ module.exports = (app) => {
         if (!cursor[key]) {
           cursor[key] = {}
         }
-        // 游标往里钻一层（引用传递，cursor 改变但 middleware 保持不变）
+        // 游标往里钻一层（引用传递，cursor 改变但 middlewares 保持不变）
         cursor = cursor[key]
       }
     }
   })
+  app.middlewares = middlewares
 }
