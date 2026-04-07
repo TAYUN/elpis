@@ -7,6 +7,8 @@ module.exports = (app) => {
      */
 
     async getList(ctx) {
+      const { proj_key: projectKey } = ctx.request.query
+      console.log(projectKey)
       const { project: projectService } = app.service
       const projectList = await projectService.getList()
       this.success(ctx, projectList)

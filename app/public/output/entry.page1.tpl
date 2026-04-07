@@ -67,11 +67,11 @@
       axios.request({
         method: 'get',
         url: '/api/project/list',
-        params: {page: 1, pageSize: 10},
+        params: { proj_key: 'test' },
         headers: {
           s_t: st,
-          s_sign: md5(`${signKey}_${st}`)
-        }
+          s_sign: md5(`${signKey}_${st}`),
+        },
       })
     }
   </script>
