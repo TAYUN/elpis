@@ -36,25 +36,29 @@ module.exports = {
 
     app.env = env()
     console.log(`-- [start] env: ${app.env.get()} --`)
-
-    // 1. 加载中间件
-    middleWareLoader(app)
-    console.log('-- [start] middlewares loaded --')
-    // 2. 加载routerSchema
-    routerSchemaLoader(app)
-    console.log('-- [start] routerSchemas loaded --')
-    // 3. 加载controller
-    controllerLoader(app)
-    console.log('-- [start] controllers loaded --')
-    // 4. 加载service
-    serviceLoader(app)
-    console.log('-- [start] services loaded --')
-    // 5. 加载config
+    // 第一阶段：基础能力（被依赖的先加载）
+    // 1. 配置 - 所有模块都可能用
     configLoader(app)
     console.log('-- [start] configs loaded --')
-    // 6. 加载extend
+    // 2. 扩展 - 先扩展 app，再加载业务
     extendLoader(app)
-    // 6.5 加载自定义中间件
+
+    // 第二阶段：业务模块（依赖上层）
+    // 3. 服务
+    serviceLoader(app)
+    console.log('-- [start] services loaded --')
+    // 4. 业务中间件（暂不注册）
+    middleWareLoader(app)
+    console.log('-- [start] middlewares loaded --')
+    // 5. 路由 Schema
+    routerSchemaLoader(app)
+    console.log('-- [start] routerSchemas loaded --')
+    // 6. 控制器
+    controllerLoader(app)
+    console.log('-- [start] controllers loaded --')
+
+    // 第三阶段：注册（按洋葱模型）
+    // 全局中间件（必须先注册，包裹所有请求）
     try {
       require(`${app.businessPath}${sep}middleware.js`)(app)
       console.log(`-- [start] glob middleware.js loaded --`)
@@ -62,7 +66,9 @@ module.exports = {
       console.log(`[exception] glob middleware.js not found, skip loading middleware`)
     }
     console.log('-- [start] extends loaded --')
-    // 7. 加载路由
+
+    // 路由及路由级中间件
+    // 7. 路由（内部挂载路由级中间件）
     routerLoader(app)
     console.log('-- [start] routers loaded --')
 
