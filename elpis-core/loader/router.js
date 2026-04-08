@@ -23,7 +23,13 @@ module.exports = (app) => {
   fileList.forEach((file) => {
     require(path.resolve(file))(app, router)
   })
-  // 路由兜底
+
+  // 将 api 参数校验中间件挂载到路由下（确保 params 已注入）
+  if (app.middlewares && app.middlewares.apiParamsVerify) {
+    router.use('/api', app.middlewares.apiParamsVerify)
+  }
+
+  // 路由兜底（必须放在最后）
   router.get('*', async (ctx, next) => {
     ctx.status = 302
     ctx.redirect(`${app?.options?.homePage ?? '/'}`)

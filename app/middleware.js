@@ -26,5 +26,6 @@ module.exports = (app) => {
 
   app.use(app.middlewares.errorHandle)
   app.use(app.middlewares.apiSignVerify)
-  app.use(app.middlewares.apiParamsVerify)
+  // apiParamsVerify 已移至 router-loader 路由级中间件
+  // 确保在路由匹配后、params 注入后执行校验
 }
