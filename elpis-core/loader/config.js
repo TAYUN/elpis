@@ -43,8 +43,16 @@ module.exports = (app) => {
     }
     // 其他情况 envConfig 保持为 {}，使用默认配置
   } catch (error) {
-    console.log('[exception] env.config not found, use default config')
+    if (error.code === 'MODULE_NOT_FOUND') {
+      // 文件不存在，这是预期的
+      console.log('[info] env.config not found, use default config')
+    } else {
+      // 其他错误：语法错误、运行时错误等，应该暴露
+      console.error('[error] failed to load env.config:', error.message)
+      throw error  // 或者 process.exit(1)
+    }
   }
+
 
   // 挂载到app上（环境配置覆盖默认配置）
   app.config = Object.assign({}, defaultConfig, envConfig)
